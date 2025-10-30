@@ -11,53 +11,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MyApp',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: Home(),
+      home: WelcomePage(),
 
       initialRoute: '/welcome',
       routes: {
         '/welcome': (context) => WelcomePage(),
-        '/loginPage': (context) => LoginPage(),
+        '/LoginPage': (context) => LoginPage(),
         '/HomePage': (context) => HomePage(),
+        '/AccountCreation': (context) => AccountCreation(),
       },
     );
   }
 }
-
-class Home extends StatefulWidget {
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  // Tracks which page is selected
-  
-
-  //List of all pages
-  final List<Widget> _pages = [
-    WelcomePage(),
-    LoginPage(),
-    HomePage(),
-    SearchPage(),
-    UserSettingPage(),
-    MyProfilePage(),
-    AccessibilityPage(),
-    PrivacySettingsPage(),
-    SavedPostsPage(),
-    MakePostPage(),
-    AccessPostPage(),
-    PopularPage(),
-    CategoriesPage(),
-    EnlargedInstructionsPage(),
-  ];
-
-  
-
-  @override
-  Widget build(BuildContext context){
-    throw UnimplementedError();
-  }
-}
-
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -69,33 +34,72 @@ class WelcomePage extends StatelessWidget {
           children: [
             const Text('Let\'s get started!', style: TextStyle(fontSize: 24)),
             const SizedBox(height: 30),
-
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/login');
+                Navigator.pushNamed(context, '/AccountCreation');
               },
-              child: const Text('Go to Login Page'),
+              child: const Text('Create Account'),
             ),
-            const SizedBox(height: 16),
-
+            
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/HomePage');
               },
               child: const Text('Continue as Guest'),
             ),
+            
+          ],
+        ),
+      ),
+      persistentFooterButtons: [
+        TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/LoginPage');
+          },
+          child: const Text('Continue as Guest'),
+        ),
+      ],
+    );
+  }
+}
+
+class AccountCreation extends StatelessWidget {//Add in login features
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back), // Or any other icon
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back
+          },
+        ),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Create Account', style: TextStyle(fontSize: 24)),
           ],
         ),
       ),
     );
   }
 }
-
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatelessWidget {//Add in login features
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back), // Or any other icon
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back
+          },
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -117,11 +121,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back), // Or any other icon
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back
+          },
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Login', style: TextStyle(fontSize: 24)),
+            const Text('Home Page', style: TextStyle(fontSize: 24)),
           ],
         ),
       ),
