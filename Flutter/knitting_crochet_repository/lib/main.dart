@@ -73,14 +73,24 @@ class LoginPage extends StatelessWidget {
     throw UnimplementedError();
   }
 }
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     throw UnimplementedError();
   }
 }
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
+  @override
+  State<SearchPage> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -117,7 +127,12 @@ class PrivacySettingsPage extends StatelessWidget {
   }
 }
 
-class SavedPostsPage extends StatelessWidget {
+class SavedPostsPage extends StatefulWidget {
+  @override
+  State<SavedPostsPage> createState() => _SavedPostsPageState();
+}
+
+class _SavedPostsPageState extends State<SavedPostsPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -125,7 +140,12 @@ class SavedPostsPage extends StatelessWidget {
   }
 }
 
-class MakePostPage extends StatelessWidget {
+class MakePostPage extends StatefulWidget {
+  @override
+  State<MakePostPage> createState() => _MakePostPageState();
+}
+
+class _MakePostPageState extends State<MakePostPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -133,28 +153,48 @@ class MakePostPage extends StatelessWidget {
   }
 }
 
-class PopularPage extends StatelessWidget {
+class PopularPage extends StatefulWidget {
+  @override
+  State<PopularPage> createState() => _PopularPageState();
+}
+
+class _PopularPageState extends State<PopularPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     throw UnimplementedError();
   }
 }
-class AccessPostPage extends StatelessWidget {
+class AccessPostPage extends StatefulWidget {
+  @override
+  State<AccessPostPage> createState() => _AccessPostPageState();
+}
+
+class _AccessPostPageState extends State<AccessPostPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     throw UnimplementedError();
   }
 }
-class CategoriesPage extends StatelessWidget {
+class CategoriesPage extends StatefulWidget {
+  @override
+  State<CategoriesPage> createState() => _CategoriesPageState();
+}
+
+class _CategoriesPageState extends State<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     throw UnimplementedError();
   }
 }
-class EnlargedInstructionsPage extends StatelessWidget {
+class EnlargedInstructionsPage extends StatefulWidget {
+  @override
+  State<EnlargedInstructionsPage> createState() => _EnlargedInstructionsPageState();
+}
+
+class _EnlargedInstructionsPageState extends State<EnlargedInstructionsPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
