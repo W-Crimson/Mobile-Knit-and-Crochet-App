@@ -40,7 +40,7 @@ class WelcomePage extends StatelessWidget {
               },
               child: const Text('Create Account'),
             ),
-            
+            SizedBox(height: 12,),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/HomePage');
@@ -56,7 +56,7 @@ class WelcomePage extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, '/LoginPage');
           },
-          child: const Text('Continue as Guest'),
+          child: const Text('Already have an account?'),
         ),
       ],
     );
@@ -122,6 +122,7 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Home Page', style: TextStyle(fontSize: 24)),
         leading: IconButton(
           icon: Icon(Icons.arrow_back), // Or any other icon
           onPressed: () {
@@ -129,11 +130,22 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       ),
-      body: Center(
+      body: 
+      
+      SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Home Page', style: TextStyle(fontSize: 24)),
+            for (int i = 0; i < 20; i++)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      print('Button ${i + 1} pressed');
+                    },
+                    child: Text('Button ${i + 1}'),
+                  ),
+                ),
           ],
         ),
       ),
