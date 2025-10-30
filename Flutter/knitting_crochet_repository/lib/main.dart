@@ -62,7 +62,32 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Let\'s get started!', style: TextStyle(fontSize: 24)),
+            const SizedBox(height: 30),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/login');
+              },
+              child: const Text('Go to Login Page'),
+            ),
+            const SizedBox(height: 16),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/HomePage');
+              },
+              child: const Text('Continue as Guest'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -70,7 +95,16 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Login', style: TextStyle(fontSize: 24)),
+          ],
+        ),
+      ),
+    );
   }
 }
 class HomePage extends StatefulWidget {
@@ -82,7 +116,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Login', style: TextStyle(fontSize: 24)),
+          ],
+        ),
+      ),
+    );
   }
 }
 class SearchPage extends StatefulWidget {
