@@ -12,6 +12,13 @@ class MyApp extends StatelessWidget {
       title: 'MyApp',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: Home(),
+
+      initialRoute: '/welcome',
+      routes: {
+        '/welcome': (context) => WelcomePage(),
+        '/loginPage': (context) => LoginPage(),
+        '/HomePage': (context) => HomePage(),
+      },
     );
   }
 }
@@ -23,7 +30,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   // Tracks which page is selected
-  int _selectedIndex = 0;
+  
 
   //List of all pages
   final List<Widget> _pages = [
@@ -43,11 +50,7 @@ class _HomeState extends State<Home> {
     EnlargedInstructionsPage(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  
 
   @override
   Widget build(BuildContext context){
