@@ -19,6 +19,16 @@ class MyApp extends StatelessWidget {
         '/LoginPage': (context) => LoginPage(),
         '/HomePage': (context) => HomePage(),
         '/AccountCreation': (context) => AccountCreation(),
+        '/SearchPage' : (context) => SearchPage(),
+        '/UserSettingPage' : (context) => UserSettingPage(),
+        '/AccessibilityPage' : (context) => AccessibilityPage(),
+        '/PrivacySettingsPage' : (context) => PrivacySettingsPage(),
+        '/MyCollectionsPage' : (context) => MyCollectionsPage(),
+        '/MakePostPage' : (context) => MakePostPage(),
+        '/PopularPage' : (context) => PopularPage(),
+        '/AccessPostPage' : (context) => AccessPostPage(),
+        '/CategoriesPage' : (context) => CategoriesPage(),
+        '/EnlargedInstructionsPage' : (context) => EnlargedInstructionsPage(),
       },
     );
   }
@@ -122,7 +132,21 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page', style: TextStyle(fontSize: 24)),
+        //title: const Text('Home Page', style: TextStyle(fontSize: 24)),
+        actions: [
+          ElevatedButton(onPressed: (){
+            Navigator.pushNamed(context, '/HomePage');
+          }
+          , child: const Text('Home')),
+          ElevatedButton(onPressed: (){
+            Navigator.pushNamed(context, '/MyCollectionsPage');
+          }
+          , child: const Text('My Collections')),
+          ElevatedButton(onPressed: (){
+            Navigator.pushNamed(context, '/UserSettingsPage');
+          }
+          , child: const Text('User Settings')),
+        ],
         leading: IconButton(
           icon: Icon(Icons.arrow_back), // Or any other icon
           onPressed: () {
@@ -194,12 +218,12 @@ class PrivacySettingsPage extends StatelessWidget {
   }
 }
 
-class SavedPostsPage extends StatefulWidget {
+class MyCollectionsPage extends StatefulWidget {
   @override
-  State<SavedPostsPage> createState() => _SavedPostsPageState();
+  State<MyCollectionsPage> createState() => MyCollectionsPageState();
 }
 
-class _SavedPostsPageState extends State<SavedPostsPage> {
+class MyCollectionsPageState extends State<MyCollectionsPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
