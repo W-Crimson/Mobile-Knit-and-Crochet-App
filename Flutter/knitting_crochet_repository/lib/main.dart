@@ -14,6 +14,8 @@ void main() async {
 
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,6 +44,8 @@ class MyApp extends StatelessWidget {
   }
 }
 class WelcomePage extends StatelessWidget {
+  const WelcomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -81,7 +85,9 @@ class WelcomePage extends StatelessWidget {
   }
 }
 
-class AccountCreation extends StatelessWidget {//Add in login features
+class AccountCreation extends StatelessWidget {
+  const AccountCreation({super.key});
+//Add in login features
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -105,7 +111,9 @@ class AccountCreation extends StatelessWidget {//Add in login features
     );
   }
 }
-class LoginPage extends StatelessWidget {//Add in login features
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+//Add in login features
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -130,6 +138,8 @@ class LoginPage extends StatelessWidget {//Add in login features
   }
 }
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -185,6 +195,8 @@ class _HomePageState extends State<HomePage> {
   }
 }
 class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
+
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
@@ -197,6 +209,8 @@ class _SearchPageState extends State<SearchPage> {
   }
 }
 class UserSettingPage extends StatelessWidget {
+  const UserSettingPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -205,6 +219,8 @@ class UserSettingPage extends StatelessWidget {
 }
 
 class MyProfilePage extends StatelessWidget {
+  const MyProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -212,6 +228,8 @@ class MyProfilePage extends StatelessWidget {
   }
 }
 class AccessibilityPage extends StatelessWidget {
+  const AccessibilityPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -219,6 +237,8 @@ class AccessibilityPage extends StatelessWidget {
   }
 }
 class PrivacySettingsPage extends StatelessWidget {
+  const PrivacySettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -227,6 +247,8 @@ class PrivacySettingsPage extends StatelessWidget {
 }
 
 class MyCollectionsPage extends StatefulWidget {
+  const MyCollectionsPage({super.key});
+
   @override
   State<MyCollectionsPage> createState() => MyCollectionsPageState();
 }
@@ -240,6 +262,8 @@ class MyCollectionsPageState extends State<MyCollectionsPage> {
 }
 
 class MakePostPage extends StatefulWidget {
+  const MakePostPage({super.key});
+
   @override
   State<MakePostPage> createState() => _MakePostPageState();
 }
@@ -253,6 +277,8 @@ class _MakePostPageState extends State<MakePostPage> {
 }
 
 class PopularPage extends StatefulWidget {
+  const PopularPage({super.key});
+
   @override
   State<PopularPage> createState() => _PopularPageState();
 }
@@ -265,6 +291,8 @@ class _PopularPageState extends State<PopularPage> {
   }
 }
 class AccessPostPage extends StatefulWidget {
+  const AccessPostPage({super.key});
+
   @override
   State<AccessPostPage> createState() => _AccessPostPageState();
 }
@@ -277,6 +305,8 @@ class _AccessPostPageState extends State<AccessPostPage> {
   }
 }
 class CategoriesPage extends StatefulWidget {
+  const CategoriesPage({super.key});
+
   @override
   State<CategoriesPage> createState() => _CategoriesPageState();
 }
@@ -289,6 +319,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
   }
 }
 class EnlargedInstructionsPage extends StatefulWidget {
+  const EnlargedInstructionsPage({super.key});
+
   @override
   State<EnlargedInstructionsPage> createState() => _EnlargedInstructionsPageState();
 }
