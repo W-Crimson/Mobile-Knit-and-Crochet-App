@@ -1,16 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 /*import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import './postFunctions.dart';
 import './authFunctions.dart';
 */
+
+class ThemeNotifier with ChangeNotifier {
+  bool _isHighContrast = false;
+
+  bool get isHighContrast => _isHighContrast;
+
+  void toggleTheme() {
+    _isHighContrast = !_isHighContrast;
+    notifyListeners(); // Tells all listening widgets to rebuild
+  }
+}
+
+// Standard Theme (Example)
+final ThemeData defaultTheme = ThemeData(
+  brightness: Brightness.light,
+  primarySwatch: Colors.blue,
+  scaffoldBackgroundColor: Color(0xFFE0E0E0), // Light gray
+  textTheme: TextTheme(bodyMedium: TextStyle(color: Colors.black87)),
+);
+
+// High Contrast Theme
+final ThemeData highContrastTheme = ThemeData(
+  brightness: Brightness.light,
+  // Use pure white background and pure black foreground for maximum contrast
+  primaryColor: Color(0xFF1C304A), // Highly visible accent color
+  scaffoldBackgroundColor: Color(0xFF046B99),
+  textTheme: TextTheme(
+    bodyMedium: TextStyle(
+      color: Color(0xFFB3EFFF), // Highly visible text color
+      fontWeight: FontWeight.bold, // Increase readability
+    ),
+    titleLarge: TextStyle(color: Color(0xFFB3EFFF),),
+  ),
+  buttonTheme: ButtonThemeData(
+    buttonColor: const Color(0xFF1C304A), // High-contrast button color
+  ),
+);
+
 void main() async {
   /*WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   */
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(create: (_) => ThemeNotifier(),
+    child: MyApp(),
+    ),
+  );
 }
 
 
@@ -19,9 +62,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    @override
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
+
     return MaterialApp(
       title: 'MyApp',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: themeNotifier.isHighContrast ? highContrastTheme : defaultTheme,
       home: WelcomePage(),
 
       initialRoute: '/welcome',
@@ -44,6 +90,10 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
+
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
 
@@ -66,11 +116,10 @@ class WelcomePage extends StatelessWidget {
             SizedBox(height: 12,),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/HomePage');
+                Navigator.pushReplacementNamed(context, '/HomePage');
               },
               child: const Text('Continue as Guest'),
             ),
-            
           ],
         ),
       ),
@@ -148,53 +197,166 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    final themeNotifier = Provider.of<ThemeNotifier>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        //title: const Text('Home Page', style: TextStyle(fontSize: 24)),
-        actions: [
-          ElevatedButton(onPressed: (){
-            Navigator.pushNamed(context, '/HomePage');
-          }
-          , child: const Text('Home')),
-          ElevatedButton(onPressed: (){
-            Navigator.pushNamed(context, '/MyCollectionsPage');
-          }
-          , child: const Text('My Collections')),
-          ElevatedButton(onPressed: (){
-            Navigator.pushNamed(context, '/UserSettingsPage');
-          }
-          , child: const Text('User Settings')),
-        ],
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Or any other icon
-          onPressed: () {
-            Navigator.of(context).pop(); // Navigate back
-          },
+      // 1. Define the Drawer (The slide-out menu)
+      drawer: Drawer(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary,),
+              child: Text('Menu', style: TextStyle(color: Theme.of(context).textTheme.titleLarge!.color, fontSize: 32)),
+            ),
+            ListTile(
+              leading: Icon(Icons.favorite, color: Colors.pink),
+              title: Text('My Collections', style: TextStyle(color: Theme.of(context).textTheme.titleLarge!.color, fontSize: 24) ),
+              onTap: () {
+                Navigator.pushNamed(context, '/MyCollectionsPage');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings, color: Theme.of(context).textTheme.titleLarge!.color),
+              title: Text('User Settings', style: TextStyle(color: Theme.of(context).textTheme.titleLarge!.color, fontSize: 24)),
+              onTap: () {
+                Navigator.pushNamed(context, '/UserSettingsPage');
+              },
+            ),
+            SwitchListTile(
+              title: Text('High Contrast', style: TextStyle(color: Theme.of(context).textTheme.titleLarge!.color, fontSize: 24)),
+              value: Provider.of<ThemeNotifier>(context).isHighContrast, // Read the value
+              onChanged: (bool newValue) {
+                themeNotifier.toggleTheme(); // Call the toggle method
+              },
+            ),
+          ],
         ),
       ),
+
+      appBar: AppBar(
+        title: Text("Featured"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+        // This is the built-in Flutter method.
+        // You must pass the context and your custom delegate (created below)
+              showSearch(
+                context: context, 
+                delegate: MySearchDelegate()
+              );
+            },
+          )
+        ],
+      ),
       body: 
-      
-      SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            for (int i = 0; i < 20; i++)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      print('Button ${i + 1} pressed');
-                    },
-                    child: Text('Button ${i + 1}'),
+      Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (int i = 0; i < 20; i++)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        print('Button ${i + 1} pressed');
+                      },
+                      child: Text('Button ${i + 1}'),
+                    ),
                   ),
-                ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
+class MySearchDelegate extends SearchDelegate {
+  
+  // Dummy data to search through
+  List<String> searchTerms = [
+    "Apple",
+    "Banana",
+    "Pear",
+    "Watermelon",
+    "Oranges",
+    "Blueberries",
+    "Strawberries",
+    "Raspberries",
+  ];
+
+  // 1. Build the "Clear" (X) button on the right
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = ''; // Clear the search bar text
+        },
+      ),
+    ];
+  }
+
+  // 2. Build the "Back" arrow on the left
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null); // Close the search, return nothing
+      },
+    );
+  }
+
+  // 3. Show Results (What appears when user hits "Enter")
+  @override
+  Widget buildResults(BuildContext context) {
+    List<String> matchQuery = [];
+    for (var fruit in searchTerms) {
+      if (fruit.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(fruit);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context, index) {
+        var result = matchQuery[index];
+        return ListTile(
+          title: Text(result),
+        );
+      },
+    );
+  }
+
+  // 4. Show Suggestions (What appears while typing)
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<String> matchQuery = [];
+    for (var fruit in searchTerms) {
+      if (fruit.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(fruit);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context, index) {
+        var result = matchQuery[index];
+        return ListTile(
+          title: Text(result),
+          onTap: () {
+            query = result; // Fill the search bar with this suggestion
+            showResults(context); // Force show results
+          },
+        );
+      },
+    );
+  }
+}
+
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
@@ -205,17 +367,31 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+     throw UnimplementedError();
   }
 }
-class UserSettingPage extends StatelessWidget {
+class UserSettingPage extends StatefulWidget {
   const UserSettingPage({super.key});
 
   @override
+  State<UserSettingPage> createState() => _UserSettingPageState();
+}
+
+class _UserSettingPageState extends State<UserSettingPage> {
+  @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    @override
+    final themeNotifier = Provider.of<ThemeNotifier>(context, listen: false);
+    return Scaffold(
+      appBar: AppBar(title: Text('Settings')),
+      body: SwitchListTile(
+        title: Text('High Contrast Mode'),
+        value: Provider.of<ThemeNotifier>(context).isHighContrast, // Read the value
+        onChanged: (bool newValue) {
+          themeNotifier.toggleTheme(); // Call the toggle method
+        },
+      ),
+    );
   }
 }
 
