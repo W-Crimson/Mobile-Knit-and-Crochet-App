@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1047639560548",
+    "project_id": "knit-crochet-app-6488e",
+    "storage_bucket": "knit-crochet-app-6488e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047639560548:android:25744fb60e8de527e26a71",
+        "android_client_info": {
+          "package_name": "com.example.knitting_crochet_repository"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047639560548-0i49ls248rsrct8jpr5vbkrcevh97kh1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwGU4VuuoO1CE-cRTALSEZQxVgTfivBz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047639560548-0i49ls248rsrct8jpr5vbkrcevh97kh1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1047639560548-vp7sfipfuk5t0oeojthi8bdg5ea534ol.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.knittingCrochetRepository"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

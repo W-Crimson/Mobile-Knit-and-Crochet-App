@@ -1,26 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import './postFunctions.dart';
-import './authFunctions.dart';
+import 'Screens/SignUpScreen.dart';
+import 'Notifiers/auth_notifier.dart';
+import 'Notifiers/theme_notifier.dart';
+import 'Screens/login_page.dart';
+import 'Screens/welcome_page.dart';
+import 'Screens/home_page.dart';
+import 'Screens/user_settings_page.dart';
 
-void main() async {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
+  
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeNotifier()), // Your existing theme service
+        ChangeNotifierProvider(create: (_) => AuthNotifier()), // ⭐ The new auth service ⭐
+      ],
+      child: MyApp(),
+    ),
   );
-  runApp(const MyApp());
 }
-
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    @override
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
+
     return MaterialApp(
       title: 'MyApp',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: themeNotifier.isHighContrast ? highContrastTheme : defaultTheme,
       home: WelcomePage(),
 
       initialRoute: '/welcome',
@@ -28,8 +44,7 @@ class MyApp extends StatelessWidget {
         '/welcome': (context) => WelcomePage(),
         '/LoginPage': (context) => LoginPage(),
         '/HomePage': (context) => HomePage(),
-        '/AccountCreation': (context) => AccountCreation(),
-        '/SearchPage' : (context) => SearchPage(),
+        '/SignUpScreen': (context) => SignUpScreen(),
         '/UserSettingPage' : (context) => UserSettingPage(),
         '/AccessibilityPage' : (context) => AccessibilityPage(),
         '/PrivacySettingsPage' : (context) => PrivacySettingsPage(),
@@ -43,180 +58,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-class WelcomePage extends StatelessWidget {
-  const WelcomePage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Let\'s get started!', style: TextStyle(fontSize: 24)),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/AccountCreation');
-              },
-              child: const Text('Create Account'),
-            ),
-            SizedBox(height: 12,),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/HomePage');
-              },
-              child: const Text('Continue as Guest'),
-            ),
-            
-          ],
-        ),
-      ),
-      persistentFooterButtons: [
-        TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/LoginPage');
-          },
-          child: const Text('Already have an account?'),
-        ),
-      ],
-    );
-  }
-}
 
-class AccountCreation extends StatelessWidget {
-  const AccountCreation({super.key});
-//Add in login features
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Or any other icon
-          onPressed: () {
-            Navigator.of(context).pop(); // Navigate back
-          },
-        ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Create Account', style: TextStyle(fontSize: 24)),
-          ],
-        ),
-      ),
-    );
-  }
-}
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
-//Add in login features
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Or any other icon
-          onPressed: () {
-            Navigator.of(context).pop(); // Navigate back
-          },
-        ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Login', style: TextStyle(fontSize: 24)),
-          ],
-        ),
-      ),
-    );
-  }
-}
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        //title: const Text('Home Page', style: TextStyle(fontSize: 24)),
-        actions: [
-          ElevatedButton(onPressed: (){
-            Navigator.pushNamed(context, '/HomePage');
-          }
-          , child: const Text('Home')),
-          ElevatedButton(onPressed: (){
-            Navigator.pushNamed(context, '/MyCollectionsPage');
-          }
-          , child: const Text('My Collections')),
-          ElevatedButton(onPressed: (){
-            Navigator.pushNamed(context, '/UserSettingsPage');
-          }
-          , child: const Text('User Settings')),
-        ],
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Or any other icon
-          onPressed: () {
-            Navigator.of(context).pop(); // Navigate back
-          },
-        ),
-      ),
-      body: 
-      
-      SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            for (int i = 0; i < 20; i++)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      print('Button ${i + 1} pressed');
-                    },
-                    child: Text('Button ${i + 1}'),
-                  ),
-                ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
-
-  @override
-  State<SearchPage> createState() => _SearchPageState();
-}
-
-class _SearchPageState extends State<SearchPage> {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
-class UserSettingPage extends StatelessWidget {
-  const UserSettingPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
 
 class MyProfilePage extends StatelessWidget {
   const MyProfilePage({super.key});
