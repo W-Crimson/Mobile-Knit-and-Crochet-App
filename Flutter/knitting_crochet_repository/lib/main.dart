@@ -9,6 +9,7 @@ import 'Screens/login_page.dart';
 import 'Screens/welcome_page.dart';
 import 'Screens/home_page.dart';
 import 'Screens/user_settings_page.dart';
+import 'authFunctions.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/welcome': (context) => WelcomePage(),
         '/LoginPage': (context) => LoginPage(),
+        '/AuthScreen': (context) => AuthScreen(),
         '/HomePage': (context) => HomePage(),
         '/SignUpScreen': (context) => SignUpScreen(),
         '/UserSettingPage' : (context) => UserSettingPage(),

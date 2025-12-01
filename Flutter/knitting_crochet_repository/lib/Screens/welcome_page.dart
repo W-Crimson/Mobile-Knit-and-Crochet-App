@@ -32,7 +32,7 @@ class WelcomePage extends StatelessWidget {
       persistentFooterButtons: [
         TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/LoginPage');
+            Navigator.pushNamed(context, '/AuthScreen');
           },
           child: const Text('Already have an account?'),
         ),
