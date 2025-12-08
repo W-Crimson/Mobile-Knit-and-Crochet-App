@@ -10,6 +10,7 @@ import 'Screens/welcome_page.dart';
 import 'Screens/home_page.dart';
 import 'Screens/user_settings_page.dart';
 import 'authFunctions.dart';
+import 'Screens/collections_page.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -85,21 +86,6 @@ class AccessibilityPage extends StatelessWidget {
 class PrivacySettingsPage extends StatelessWidget {
   const PrivacySettingsPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
-
-class MyCollectionsPage extends StatefulWidget {
-  const MyCollectionsPage({super.key});
-
-  @override
-  State<MyCollectionsPage> createState() => MyCollectionsPageState();
-}
-
-class MyCollectionsPageState extends State<MyCollectionsPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

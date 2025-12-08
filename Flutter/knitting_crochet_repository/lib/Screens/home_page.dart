@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'search_delegate.dart';
 import '../Notifiers/theme_notifier.dart';
 
+
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
