@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 
 
-Future<void> uploadPostToDb(String username, String difficulty, String postText, List<String> materials, List<String> tags) async {
+Future<void> uploadPostToDb(String username, String difficulty, List<String> postText, List<String> materials, List<String> tags) async {
 try {
   await FirebaseFirestore.instance.collection("posts").add({
     "author": username, 
