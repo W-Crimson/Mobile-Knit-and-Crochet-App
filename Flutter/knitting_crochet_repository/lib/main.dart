@@ -10,7 +10,7 @@ import 'Screens/welcome_page.dart';
 import 'Screens/home_page.dart';
 import 'Screens/user_settings_page.dart';
 import 'authFunctions.dart';
-import 'Screens/collections_page.dart';
+import 'Screens/make_post_page.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         '/UserSettingPage' : (context) => UserSettingPage(),
         '/AccessibilityPage' : (context) => AccessibilityPage(),
         '/PrivacySettingsPage' : (context) => PrivacySettingsPage(),
-        '/MyCollectionsPage' : (context) => MyCollectionsPage(),
+        '/MyCollectionsPage' : (context) => MakePostPage(),
         '/MakePostPage' : (context) => MakePostPage(),
         '/PopularPage' : (context) => PopularPage(),
         '/AccessPostPage' : (context) => AccessPostPage(),
