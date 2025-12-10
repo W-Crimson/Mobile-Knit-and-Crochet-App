@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthNotifier with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -8,70 +8,80 @@ class AuthNotifier with ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  Future<void> signUpWithEmail(String email, String password) async {
-  _setLoading(true);
+  // ⭐ SIGN UP METHOD
+  Future<void> signUpWithEmail({
+    required String email,
+    required String password,
+  }) async {
+    _setLoading(true);
 
-  try {
-    // The key difference: use createUserWithEmailAndPassword
-    await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    
-    // Note: If you need to save user data (like name, profile image)
-    // to Firestore, you would do it here using the new user's UID:
-    // await FirebaseFirestore.instance.collection('users').doc(_auth.currentUser!.uid).set({
-    //   'email': email,
-    //   'createdAt': FieldValue.serverTimestamp(),
-    // });
+    try {
+      // 1. Create the user in FirebaseAuth
+      UserCredential userCredential =
+      await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-  } on FirebaseAuthException catch (e) {
-    String message = 'An error occurred during sign-up.';
-    if (e.code == 'email-already-in-use') {
-      message = 'This email is already registered.';
-    } else if (e.code == 'weak-password') {
-      message = 'The password is too weak.';
+      String uid = userCredential.user!.uid;
+
+      // 2. Save user record in Firestore
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({
+        'uid': uid,
+        'email': email,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+    } on FirebaseAuthException catch (e) {
+      _setLoading(false);
+
+      if (e.code == 'email-already-in-use') {
+        throw 'This email is already registered.';
+      } else if (e.code == 'weak-password') {
+        throw 'Password is too weak.';
+      } else {
+        throw e.message ?? 'An error occurred during sign-up.';
+      }
+    } catch (e) {
+      _setLoading(false);
+      throw 'Unexpected error. Please try again.';
     }
+
     _setLoading(false);
-    throw message;
-  } catch (e) {
-    _setLoading(false);
-    throw 'An unexpected error occurred.';
   }
 
-  _setLoading(false);
-}
-
+  // ⭐ LOGIN METHOD
   Future<void> signInWithEmail(String email, String password) async {
     _setLoading(true);
 
     try {
-      // 1. Call the Firebase sign-in method
       await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      // Success is handled automatically by FirebaseAuth's StreamBuilder
-      // which should be listening for User changes in your main app file.
 
     } on FirebaseAuthException catch (e) {
-      // 2. Handle specific Firebase errors (e.g., wrong password)
-      String message = 'An error occurred. Please check your credentials.';
+      _setLoading(false);
+
       if (e.code == 'user-not-found') {
-        message = 'No user found for that email.';
+        throw 'No user found for that email.';
       } else if (e.code == 'wrong-password') {
-        message = 'Wrong password provided.';
+        throw 'Wrong password provided.';
+      } else {
+        throw e.message ?? 'Authentication error';
       }
-      _setLoading(false);
-      // 3. Throw the error so the UI can catch and display it
-      throw message; 
     } catch (e) {
-      // Handle generic errors
       _setLoading(false);
-      throw 'An unexpected error occurred.';
+      throw 'Unexpected error. Please try again.';
     }
 
     _setLoading(false);
+  }
+
+
+  Future<void> signOut() async {
+    await _auth.signOut();
+    notifyListeners();
   }
 
   void _setLoading(bool value) {

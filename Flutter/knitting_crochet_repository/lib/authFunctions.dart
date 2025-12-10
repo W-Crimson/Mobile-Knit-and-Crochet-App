@@ -21,28 +21,35 @@ class _AuthScreenState extends State<AuthScreen> {
   Future<void> _submitAuthForm() async {
     try {
       if (isLogin) {
-            // Log in existing user
-            await _auth.signInWithEmailAndPassword(
-                email: _emailController.text.trim(),
-                password: _passwordController.text.trim(),
-            );
-        } else {
-            // Sign up new user
-            UserCredential userCredential =
-                await _auth.createUserWithEmailAndPassword(
-                email: _emailController.text.trim(),
-                password: _passwordController.text.trim(),
-            );
+        // Login user
+        await _auth.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
 
-            // Save username to Firestore
-            await FirebaseFirestore.instance
-                .collection('users')
-                .doc(userCredential.user!.uid)
-                .set({
-                    'username': _usernameController.text.trim(),
-                    'email': _emailController.text.trim(),
-            });
-        }
+        // ⭐ IMPORTANT: Navigate to HomePage
+        Navigator.pushReplacementNamed(context, '/HomePage');
+
+      } else {
+        // Sign up user
+        UserCredential userCredential =
+        await _auth.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set({
+          'username': _usernameController.text.trim(),
+          'email': _emailController.text.trim(),
+        });
+
+        // ⭐ Also navigate after signup
+        Navigator.pushReplacementNamed(context, '/HomePage');
+      }
+
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.message ?? 'Authentication error')),

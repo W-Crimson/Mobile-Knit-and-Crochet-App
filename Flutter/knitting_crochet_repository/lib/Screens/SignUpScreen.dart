@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../Notifiers/auth_notifier.dart'; // Import your authentication service
 
 class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -14,24 +16,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _confirmPasswordController = TextEditingController();
 
   void _submitSignUp() async {
-    // 1. Validate the entire form
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
+    if (!_formKey.currentState!.validate()) return;
 
     final authService = Provider.of<AuthNotifier>(context, listen: false);
-    final email = _emailController.text;
-    final password = _passwordController.text;
 
     try {
-      // 2. ⭐ Call the Firebase registration method ⭐
-      await authService.signUpWithEmail(email, password);
-      
-      // 3. SUCCESS: Navigate to the Home screen
-      Navigator.pushReplacementNamed(context, '/HomePage'); 
+      await authService.signUpWithEmail(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      Navigator.pushReplacementNamed(context, '/HomePage');
 
     } catch (errorMessage) {
-      // 4. ERROR: Display the error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(errorMessage.toString()),

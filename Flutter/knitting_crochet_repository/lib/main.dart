@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:knitting_crochet_repository/Screens/auth_wrapper.dart';
+import 'package:knitting_crochet_repository/Screens/makepostpage.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -10,6 +12,7 @@ import 'Screens/welcome_page.dart';
 import 'Screens/home_page.dart';
 import 'Screens/user_settings_page.dart';
 import 'authFunctions.dart';
+import 'postFunctions.dart';
 
 
 void main() async{
@@ -39,9 +42,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MyApp',
       theme: themeNotifier.isHighContrast ? highContrastTheme : defaultTheme,
-      home: WelcomePage(),
-
-      initialRoute: '/welcome',
+      home: AuthWrapper(),
       routes: {
         '/welcome': (context) => WelcomePage(),
         '/LoginPage': (context) => LoginPage(),
@@ -52,11 +53,12 @@ class MyApp extends StatelessWidget {
         '/AccessibilityPage' : (context) => AccessibilityPage(),
         '/PrivacySettingsPage' : (context) => PrivacySettingsPage(),
         '/MyCollectionsPage' : (context) => MyCollectionsPage(),
-        '/MakePostPage' : (context) => MakePostPage(),
+        // '/MakePostPage': (context) => MakePostPage(),
         '/PopularPage' : (context) => PopularPage(),
         '/AccessPostPage' : (context) => AccessPostPage(),
         '/CategoriesPage' : (context) => CategoriesPage(),
         '/EnlargedInstructionsPage' : (context) => EnlargedInstructionsPage(),
+        '/MakePostPage': (context) => MakePostPage(),
       },
     );
   }
@@ -108,20 +110,20 @@ class MyCollectionsPageState extends State<MyCollectionsPage> {
   }
 }
 
-class MakePostPage extends StatefulWidget {
-  const MakePostPage({super.key});
-
-  @override
-  State<MakePostPage> createState() => _MakePostPageState();
-}
-
-class _MakePostPageState extends State<MakePostPage> {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
+// class MakePostPage extends StatefulWidget {
+//   const MakePostPage({super.key});
+//
+//   @override
+//   State<MakePostPage> createState() => _MakePostPageState();
+// }
+//
+// class _MakePostPageState extends State<MakePostPage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     // TODO: implement build
+//     throw UnimplementedError();
+//   }
+// }
 
 class PopularPage extends StatefulWidget {
   const PopularPage({super.key});
@@ -178,4 +180,5 @@ class _EnlargedInstructionsPageState extends State<EnlargedInstructionsPage> {
     // TODO: implement build
     throw UnimplementedError();
   }
+
 }
